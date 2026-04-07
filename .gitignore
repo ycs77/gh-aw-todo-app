@@ -36,3 +36,4 @@ coverage
 __screenshots__/
 .spectra/
 openspec/.vector-search.db*
+docs/specs/.vector-search.db*

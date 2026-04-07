@@ -14,6 +14,7 @@ describe('addTodo', () => {
       done: false,
     })
     expect(result[0].createdAt).toBeDefined()
+    expect(Number.isNaN(Date.parse(result[0].createdAt))).toBe(false)
   })
 
   it('id 應自動遞增', () => {
@@ -22,6 +23,18 @@ describe('addTodo', () => {
     const result = addTodo(todos, '寫報告')
 
     expect(result[1].id).toBe(2)
+  })
+
+  it('應以目前最大 id + 1 產生新 id', () => {
+    const todos = [
+      { id: 3, title: '買牛奶', done: false, createdAt: '' },
+      { id: 10, title: '寫報告', done: true, createdAt: '' },
+      { id: 4, title: '運動', done: false, createdAt: '' },
+    ]
+
+    const result = addTodo(todos, '讀書')
+
+    expect(result.at(-1).id).toBe(11)
   })
 
   it('不應修改原始陣列', () => {

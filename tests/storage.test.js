@@ -43,4 +43,15 @@ describe('saveTodos', () => {
     const saved = JSON.parse(vol.readFileSync(path.join(process.cwd(), 'todos.json'), 'utf-8'))
     expect(saved).toEqual([])
   })
+
+  it('save 後再 load 應能還原等價資料', () => {
+    const todos = [
+      { id: 1, title: '買牛奶', done: false, createdAt: '2026-04-07T00:00:00.000Z' },
+      { id: 2, title: '寫報告', done: true, createdAt: '2026-04-07T00:05:00.000Z' },
+    ]
+
+    saveTodos(todos)
+
+    expect(loadTodos()).toEqual(todos)
+  })
 })
