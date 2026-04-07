@@ -34,3 +34,5 @@ coverage
 
 # Vitest
 __screenshots__/
+.spectra/
+openspec/.vector-search.db*
