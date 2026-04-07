@@ -1,0 +1,13 @@
+{
+  "name": "gh-aw-todo-app",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "memfs": "^4.0.0",
+    "vitest": "^4.0.0"
+  }
+}
