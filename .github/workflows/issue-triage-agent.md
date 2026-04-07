@@ -1,26 +1,33 @@
 ---
-timeout-minutes: 5
-strict: true
 on:
-  schedule: "0 14 * * 1-5"
-  workflow_dispatch:
+  schedule: daily around 14:00 on weekdays
+  workflow_dispatch: null
 permissions:
   issues: read
+imports:
+- github/gh-aw/.github/workflows/shared/github-guard-policy.md@6ab2750d840a7389062ead5f99b8ab7292bd7e7f
+- shared/reporting.md
+safe-outputs:
+  add-comment: {}
+  add-labels:
+    allowed:
+    - bug
+    - feature
+    - enhancement
+    - documentation
+    - question
+    - help-wanted
+    - good-first-issue
+source: github/gh-aw/.github/workflows/issue-triage-agent.md@6ab2750d840a7389062ead5f99b8ab7292bd7e7f
+strict: true
+timeout-minutes: 5
 tools:
   github:
-    # For now we are enabling lockdown mode for this workflow since it processes issues from the public repo and we want to ensure it only processes trusted input from maintainers.
-    lockdown: true
-    toolsets: [issues, labels]
-safe-outputs:
-  add-labels:
-    allowed: [bug, feature, enhancement, documentation, question, help-wanted, good-first-issue]
-  add-comment: {}
-imports:
-  - shared/mood.md
-  - shared/reporting.md
-source: github/gh-aw/.github/workflows/issue-triage-agent.md@852cb06ad52958b402ed982b69957ffc57ca0619
+    min-integrity: approved
+    toolsets:
+    - issues
+    - labels
 ---
-
 # Issue Triage Agent
 
 List open issues in ${{ github.repository }} that have no labels. For each unlabeled issue, analyze the title and body, then add one of the allowed labels: `bug`, `feature`, `enhancement`, `documentation`, `question`, `help-wanted`, or `good-first-issue`, `community`.
@@ -40,7 +47,7 @@ Hi @{author}! I've categorized this issue as **{label_name}** based on the follo
 **Reasoning**: {brief_explanation_of_why_this_label}
 
 <details>
-<summary><b>View Triage Details</b></summary>
+<summary>View Triage Details</summary>
 
 #### Analysis
 - **Keywords detected**: {list_of_keywords_that_matched}
@@ -82,3 +89,9 @@ This provides both per-issue context and batch visibility.
 - `help-wanted`: Indicates that the issue is a good candidate for external contributions and help
 - `good-first-issue`: Marks issues that are suitable for newcomers to the project, often with simpler scope.
 - `community`: Indicates that the issue is related to community engagement, such as events, discussions, or contributions that don't fit into the other categories. From authors who are not contributors to the codebase but are engaging with the project in other ways.
+
+**Important**: If no action is needed after completing your analysis, you **MUST** call the `noop` safe-output tool with a brief explanation. Failing to call any safe-output tool is the most common cause of safe-output workflow failures.
+
+```json
+{"noop": {"message": "No action needed: [brief explanation of what was analyzed and why]"}}
+```
