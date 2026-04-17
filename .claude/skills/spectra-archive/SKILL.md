@@ -54,10 +54,10 @@ Archive a completed change.
 
 4. **Assess delta spec sync state**
 
-   Check for delta specs at `docs/specs/changes/<name>/specs/`. If none exist, proceed without sync prompt.
+   Check for delta specs at `openspec/changes/<name>/specs/`. If none exist, proceed without sync prompt.
 
    **If delta specs exist:**
-   - Compare each delta spec with its corresponding main spec at `docs/specs/specs/<capability>/spec.md`
+   - Compare each delta spec with its corresponding main spec at `openspec/specs/<capability>/spec.md`
    - Determine what changes would be applied (adds, modifications, removals, renames)
    - Show a combined summary before prompting
 
@@ -99,7 +99,7 @@ Archive a completed change.
 
 **Change:** <change-name>
 **Schema:** <schema-name>
-**Archived to:** docs/specs/changes/archive/YYYY-MM-DD-<name>/
+**Archived to:** openspec/changes/archive/YYYY-MM-DD-<name>/
 **Specs:** ✓ Synced to main specs
 
 All artifacts complete. All tasks complete.
@@ -112,7 +112,7 @@ All artifacts complete. All tasks complete.
 
 **Change:** <change-name>
 **Schema:** <schema-name>
-**Archived to:** docs/specs/changes/archive/YYYY-MM-DD-<name>/
+**Archived to:** openspec/changes/archive/YYYY-MM-DD-<name>/
 **Specs:** No delta specs
 
 All artifacts complete. All tasks complete.
@@ -125,7 +125,7 @@ All artifacts complete. All tasks complete.
 
 **Change:** <change-name>
 **Schema:** <schema-name>
-**Archived to:** docs/specs/changes/archive/YYYY-MM-DD-<name>/
+**Archived to:** openspec/changes/archive/YYYY-MM-DD-<name>/
 **Specs:** Sync skipped (user chose to skip)
 
 **Warnings:**
@@ -142,7 +142,7 @@ Review the archive if this was not intentional.
 ## Archive Failed
 
 **Change:** <change-name>
-**Target:** docs/specs/changes/archive/YYYY-MM-DD-<name>/
+**Target:** openspec/changes/archive/YYYY-MM-DD-<name>/
 
 Target archive directory already exists.
 
