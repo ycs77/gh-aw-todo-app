@@ -1,5 +1,5 @@
 import { loadTodos, saveTodos } from './src/storage.js'
-import { addTodo, listTodos, markDone } from './src/todo.js'
+import { addTodo, deleteTodo, listTodos, markDone } from './src/todo.js'
 
 const [, , command, ...args] = process.argv
 
@@ -48,9 +48,28 @@ switch (command) {
     break
   }
 
+  case 'delete': {
+    const id = parseInt(args[0], 10)
+    if (isNaN(id)) {
+      console.error('請輸入有效的 id，例如：node cli.js delete 1')
+      process.exit(1)
+    }
+    try {
+      const todos = loadTodos()
+      const updated = deleteTodo(todos, id)
+      saveTodos(updated)
+      console.log(`已刪除：[${id}]`)
+    } catch (err) {
+      console.error(err.message)
+      process.exit(1)
+    }
+    break
+  }
+
   default:
     console.log('用法：')
     console.log('  node cli.js add <待辦事項>')
     console.log('  node cli.js list')
     console.log('  node cli.js done <id>')
+    console.log('  node cli.js delete <id>')
 }
