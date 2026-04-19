@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { addTodo, listTodos, markDone } from '../src/todo.js'
+import { addTodo, deleteTodo, listTodos, markDone } from '../src/todo.js'
 
 describe('addTodo', () => {
   it('應新增一筆待辦事項並回傳更新後的陣列', () => {
@@ -89,5 +89,42 @@ describe('markDone', () => {
 
   it('當 id 不存在時應拋出錯誤', () => {
     expect(() => markDone(todos, 99)).toThrow('找不到 id 為 99 的待辦事項')
+  })
+})
+
+describe('deleteTodo', () => {
+  let todos
+
+  beforeEach(() => {
+    todos = [
+      { id: 1, title: '買牛奶', done: false, createdAt: '' },
+      { id: 2, title: '寫報告', done: false, createdAt: '' },
+      { id: 3, title: '運動', done: true, createdAt: '' },
+    ]
+  })
+
+  it('應刪除指定 id 的待辦並保留其他項目', () => {
+    const result = deleteTodo(todos, 2)
+
+    expect(result).toHaveLength(2)
+    expect(result.map((t) => t.id)).toEqual([1, 3])
+  })
+
+  it('不應修改原始陣列', () => {
+    deleteTodo(todos, 1)
+
+    expect(todos).toHaveLength(3)
+    expect(todos.map((t) => t.id)).toEqual([1, 2, 3])
+  })
+
+  it('當 id 不存在時應拋出錯誤', () => {
+    expect(() => deleteTodo(todos, 99)).toThrow('找不到 id 為 99 的待辦事項')
+  })
+
+  it('刪除後其餘待辦內容應保持不變', () => {
+    const result = deleteTodo(todos, 2)
+
+    expect(result[0]).toEqual(todos[0])
+    expect(result[1]).toEqual(todos[2])
   })
 })

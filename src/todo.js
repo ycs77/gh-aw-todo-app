@@ -14,3 +14,11 @@ export function markDone(todos, id) {
   }
   return todos.map((t) => (t.id === id ? { ...t, done: true } : t))
 }
+
+export function deleteTodo(todos, id) {
+  const index = todos.findIndex((t) => t.id === id)
+  if (index === -1) {
+    throw new Error(`找不到 id 為 ${id} 的待辦事項`)
+  }
+  return todos.filter((t) => t.id !== id)
+}
